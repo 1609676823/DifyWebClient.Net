@@ -1,0 +1,60 @@
+### KnowledgeListResponse 类属性
+<br>data：存储 KnowledgeDataList 对象的列表，代表具体的知识数据项集合。
+<br>has_more：布尔值，指示是否还有更多数据项可供获取。
+<br>limit：每次请求返回的数据项数量上限。
+<br>total：数据项的总数。
+<br>page：当前所在的页码。
+<br>RealJsonstring：公共属性(获取原始的返回报文)，设置时会尝试反序列化 JSON 来填充对象属性。
+<br>KnowledgeDataList 类属性
+<br>id：数据项的唯一标识符。
+<br>name：数据项的名称。
+<br>description：数据项的描述信息。
+<br>provider：数据项的提供者。
+<br>permission：与数据项关联的权限。
+<br>data_source_type：数据项的数据源类型。
+<br>indexing_technique：用于索引数据项的技术。
+<br>app_count：与数据项关联的应用程序数量。
+<br>document_count：与数据项关联的文档数量。
+<br>word_count：与数据项关联的词汇数量。
+<br>created_by：创建数据项的用户标识符。
+<br>created_at：数据项创建的时间戳。
+<br>updated_by：更新数据项的用户标识符。
+<br>updated_at：数据项更新的时间戳。
+<br>embedding_model：数据项使用的嵌入模型。
+<br>embedding_model_provider：嵌入模型的提供者。
+<br>embedding_available：指示数据项是否可用嵌入。
+<br>retrieval_model_dict：与数据项关联的检索模型字典。
+<br>tags：与数据项关联的标签列表。
+<br>doc_form：与数据项关联的文档形式。
+<br>external_knowledge_info：与数据项关联的外部知识信息。
+<br>external_retrieval_model：与数据项关联的外部检索模型。
+<br>Retrieval_Model_Dict 类属性
+<br>search_method：检索时使用的搜索方法。
+<br>reranking_enable：指示是否启用重排序功能。
+<br>reranking_mode：重排序的模式。
+<br>reranking_model：重排序所使用的模型。
+<br>weights：与检索模型关联的权重设置。
+<br>top_k：要检索的前 K 个结果数量。
+<br>score_threshold_enabled：指示是否启用分数阈值。
+<br>score_threshold：分数阈值。
+<br>Reranking_Model 类属性
+<br>reranking_provider_name：重排序服务的提供者名称。
+<br>reranking_model_name：重排序所使用的模型名称。
+<br>Weights 类属性
+<br>keyword_setting：关键词相关的设置。
+<br>vector_setting：向量相关的设置。
+<br>Keyword_Setting 类属性
+<br>keyword_weight：关键词的权重。
+<br>Vector_Setting 类属性
+<br>vector_weight：向量的权重。
+<br>embedding_model_name：向量嵌入使用的模型名称。
+<br>embedding_provider_name：向量嵌入模型的提供者名称。
+<br>External_Knowledge_Info 类属性
+<br>external_knowledge_id：外部知识的标识符。
+<br>external_knowledge_api_id：外部知识 API 的标识符。
+<br>external_knowledge_api_name：外部知识 API 的名称。
+<br>external_knowledge_api_endpoint：外部知识 API 的端点。
+<br>External_Retrieval_Model 类属性
+<br>top_k：外部检索要获取的前 K 个结果数量。
+<br>score_threshold：外部检索的分数阈值。
+<br>score_threshold_enabled：指示外部检索是否启用分数阈值。

@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--<TargetFramework>net8.0</TargetFramework>-->
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net9.0;net8.0;net7.0;net6.0;net5.0;net481;net48;net472;net471;net47;net462;netstandard2.1;netstandard2.0;</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
+    <Title>DifyWebClient.Net</Title>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>zoujiawei</Authors>
+    <!--<AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <VersionPrefix>1.0.0.1</VersionPrefix>-->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitee.com/lnsyzjw/dify-web-client.-net</PackageProjectUrl>
+    <Description>
+     Dify平台api的C# .NET 集成框架，便于AI开发者调用
+    </Description>
+    <Copyright>Copyright © zjw 2025</Copyright>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>1.0.0.10</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\ChatApp\ChunkChatCompletionResponse.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="6.0.1" />
+    <PackageReference Include="System.Text.Json" Version="9.0.3" />
+  </ItemGroup>
+
+   <!--如果当前框架是Framework，则引用System.Net.Http--> 
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net481'" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net48'" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net472'" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net471'" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net47'" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net462'" />
+   
+  </ItemGroup> 
+  <ItemGroup>
+    <Resource Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup> 
+
+  
+  <!-- 如果当前框架是Framework，则引用System.Web -->
+  <!--<ItemGroup>
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net481'" />
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net48'" />
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net472'" />
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net471'" />
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net47'" />
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net462'" />
+  </ItemGroup>-->
+
+</Project>
