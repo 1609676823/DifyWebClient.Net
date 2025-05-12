@@ -20,7 +20,7 @@
     <Copyright>Copyright © zjw 2025</Copyright>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.0.10</Version>
+    <Version>1.0.0.11</Version>
   </PropertyGroup>
 
   <ItemGroup>
