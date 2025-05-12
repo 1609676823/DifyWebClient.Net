@@ -3,6 +3,7 @@ using DifyWebClient.Net.ApiClients;
 using DifyWebClient.Net.Enum;
 using DifyWebClient.Net.Models;
 using DifyWebClient.Net.Models.Base;
+using DifyWebClient.Net.Models.ChatApp;
 using DifyWebClient.Net.Models.Knowledge;
 using DifyWebClient.Net.Models.WorkflowApp;
 using System.Net;
@@ -17,27 +18,39 @@ namespace ConsoleAppTest
     {
         static void Main(string[] args)
         {
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            //workflowAppApiClient.EncodingDefault= Encoding.GetEncoding("GB2312");
 
-            // 禁用鼠标点击等待
-            Console.TreatControlCAsInput = true;
-            var exit = new ManualResetEvent(false);
-            string url = "http://127.0.0.01/v1";
-            string apikey = "";
+            /*ChatAppWebClient初始化*/
+            ChatAppWebClient chatAppWebClient = new ChatAppWebClient("http://127.0.0.1/v1", "key");
+            var task = chatAppWebClient.SendChatMessageAsync(new ChatMessageRequest("你好", ResponseMode.Streaming) { user = "user" });
 
-            WorkflowAppApiClient workflowAppApiClient = new WorkflowAppApiClient(url, apikey);
-            GetParametersResponse getParametersResponse = workflowAppApiClient.GetParameters();
-            Console.WriteLine(getParametersResponse.RealJsonstring);
-            Console.WriteLine(getParametersResponse.system_parameters.file_size_limit);
-            Console.WriteLine(getParametersResponse.retriever_resource.enabled);
+            foreach (var rsp in chatAppWebClient.ObservChunkChatReceived)
+            {
+                if (rsp is MessageEventResponse)
+                {
+                    MessageEventResponse eventdata = rsp as MessageEventResponse;
+                    Console.Write(eventdata.answer);
+                   
+                }
+                if (rsp.IsCompletedSSE)
+                {
+
+                }
+
+            }
+
+            var task1 = chatAppWebClient.SendChatMessageAsync(new ChatMessageRequest("介绍一下你自己", ResponseMode.Streaming) { user = "user" });
+
+          
+            foreach (var rsp in chatAppWebClient.ObservChunkChatReceived)
+            {
+                if (rsp is MessageEventResponse)
+                {
+                    MessageEventResponse eventdata = rsp as MessageEventResponse;
+                    Console.Write(eventdata.answer);
+                }
 
 
-
-            /*需要保持线程不退出才能获取到*/
-
-            exit.WaitOne();
-            //  while (true) {  }
+            }
             Console.ReadKey();
         }
     }

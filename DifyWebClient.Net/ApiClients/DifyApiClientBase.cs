@@ -78,7 +78,7 @@ namespace DifyWebClient.Net.ApiClients
         /// 返回 App 输出的流式块
         /// </summary>
         public IObservable<SSEEventResponseBase> ObservChunkChatReceived => _observChunkChatReceived.AsObservable();
-        private readonly Subject<SSEEventResponseBase> _observChunkChatReceived = new Subject<SSEEventResponseBase>();
+        private Subject<SSEEventResponseBase> _observChunkChatReceived = new Subject<SSEEventResponseBase>();
 
         /// <summary>
         /// 事件处理器
@@ -194,7 +194,7 @@ namespace DifyWebClient.Net.ApiClients
         /// <summary>
         /// 
         /// </summary>
-        public Encoding EncodingDefault { get; set; } =Encoding.UTF8;
+        public Encoding EncodingDefault { get; set; } = Encoding.UTF8;
         /// <summary>
         /// 异步方法
         /// </summary>
@@ -297,6 +297,27 @@ namespace DifyWebClient.Net.ApiClients
                                 ProcessServerSentEventsData(line, ApiType);
 
                             }
+                            #region SSE结束标记
+
+
+                            // SSE结束标记
+                            try
+                            {
+                                SSEEventResponseBase eventResponseBase = new SSEEventResponseBase();
+                                eventResponseBase.IsCompletedSSE = true;
+                                _observChunkChatReceived.OnNext(eventResponseBase);
+                                OnChunkChatReceived(eventResponseBase);
+                                _observChunkChatReceived.OnCompleted();
+                                _observChunkChatReceived = new Subject<SSEEventResponseBase>();
+                            }
+                            catch (Exception)
+                            {
+
+                                // throw;
+                            }
+                            #endregion
+
+
                         }
 
                         // content = streamcontent.ToString();
@@ -645,8 +666,8 @@ namespace DifyWebClient.Net.ApiClients
             return task.Result;
         }
 
-       
-      
+
+
 
 
         /// <summary>
@@ -723,35 +744,45 @@ namespace DifyWebClient.Net.ApiClients
 
                 if (disposing)
                 {
-
-                    // 释放托管资源
-                    _allWebStreamDataReceived?.Dispose();
-                    _observChunkChatReceived?.Dispose();
-                    httpClient?.Dispose();
-                    httpResponseMessage?.Dispose();
-                    // 移除事件处理程序
-                    if (AllEventResponseReceived != null)
+                    try
                     {
-                        foreach (Delegate d in AllEventResponseReceived.GetInvocationList())
-                        {
-                            AllEventResponseReceived -= (EventHandler<string>)d;
-                        }
-                    }
 
-                    if (EventChunkChatReceived != null)
+
+                        // 释放托管资源
+                        _allWebStreamDataReceived?.Dispose();
+                        _observChunkChatReceived?.Dispose();
+                        httpClient?.Dispose();
+                        httpResponseMessage?.Dispose();
+                        // 移除事件处理程序
+                        if (AllEventResponseReceived != null)
+                        {
+                            foreach (Delegate d in AllEventResponseReceived.GetInvocationList())
+                            {
+                                AllEventResponseReceived -= (EventHandler<string>)d;
+                            }
+                        }
+
+                        if (EventChunkChatReceived != null)
+                        {
+                            foreach (Delegate d in EventChunkChatReceived.GetInvocationList())
+                            {
+                                EventChunkChatReceived -= (EventHandler<SSEEventResponseBase>)d;
+                            }
+                        }
+
+                        // 清空所有字段
+                        Url = string.Empty;
+                        ApiKey = string.Empty;
+                        Instance = null;
+                        RealRequestBody = string.Empty;
+                        useUnsafeRelaxedJsonEscaping = false;
+
+                    }
+                    catch (Exception)
                     {
-                        foreach (Delegate d in EventChunkChatReceived.GetInvocationList())
-                        {
-                            EventChunkChatReceived -= (EventHandler<SSEEventResponseBase>)d;
-                        }
-                    }
 
-                    // 清空所有字段
-                    Url = string.Empty;
-                    ApiKey = string.Empty;
-                    Instance = null;
-                    RealRequestBody = string.Empty;
-                    useUnsafeRelaxedJsonEscaping = false;
+                        // throw;
+                    }
                 }
                 // 释放非托管资源（如果有的话）
                 disposed = true;

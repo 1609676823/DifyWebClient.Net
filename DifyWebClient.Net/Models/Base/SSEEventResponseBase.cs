@@ -28,5 +28,11 @@ namespace DifyWebClient.Net.Models.ChatApp
         /// </summary>
         [JsonIgnore]
         public virtual string? RealJsonstring { get; set; }
+
+        /// <summary>
+        /// 程序事件结束标记，SSE结束标记，非dify给出，由框架通过SSE结束进行判断
+        /// </summary>
+        [JsonIgnore]
+        public bool IsCompletedSSE { get; set; } = false;
     }
 }
