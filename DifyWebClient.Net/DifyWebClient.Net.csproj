@@ -4,6 +4,8 @@
     <!--<TargetFramework>net8.0</TargetFramework>-->
     <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net9.0;net8.0;net7.0;net6.0;net5.0;net481;net48;net472;net471;net47;net462;netstandard2.1;netstandard2.0;</TargetFrameworks>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
+    <!--抑制版本兼容警告-->
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     <Title>DifyWebClient.Net</Title>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -20,7 +22,7 @@
     <Copyright>Copyright © zjw 2025</Copyright>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.0.11</Version>
+    <Version>1.0.0.12</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,7 +36,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="6.0.1" />
-    <PackageReference Include="System.Text.Json" Version="9.0.4" />
   </ItemGroup>
 
    <!--如果当前框架是Framework，则引用System.Net.Http--> 
@@ -45,6 +46,7 @@
     <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net471'" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net47'" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" Condition="'$(TargetFramework)' == 'net462'" />
+    <PackageReference Include="System.Text.Json" Version="9.0.5" />
    
   </ItemGroup> 
   <ItemGroup>

@@ -27,8 +27,8 @@ namespace ConsoleAppTest
             {
                 if (rsp is MessageEventResponse)
                 {
-                    MessageEventResponse eventdata = rsp as MessageEventResponse;
-                    Console.Write(eventdata.answer);
+                    MessageEventResponse? eventdata = rsp as MessageEventResponse;
+                    Console.Write(eventdata!.answer);
                    
                 }
                 if (rsp.IsCompletedSSE)
@@ -45,8 +45,8 @@ namespace ConsoleAppTest
             {
                 if (rsp is MessageEventResponse)
                 {
-                    MessageEventResponse eventdata = rsp as MessageEventResponse;
-                    Console.Write(eventdata.answer);
+                    MessageEventResponse? eventdata = rsp as MessageEventResponse;
+                    Console.Write(eventdata!.answer);
                 }
 
 
